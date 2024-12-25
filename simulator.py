@@ -137,24 +137,23 @@ def main():
         logging.basicConfig(level=logging.INFO)
 
     strategies = [
-        # RoundBasedConstantBank("Bank 1500/600", [[10, 1500], [20, 600]]),
-        # RoundBasedConstantBank("Bank 1000/500", [[10, 1000], [20, 500]]),
+        RoundBasedConstantBank("Bank 1500/600", [[10, 1500], [20, 600]]),
+        RoundBasedConstantBank("Bank 1000/500", [[10, 1000], [20, 500]]),
     ]
 
-    strategies.append(BankAfterRound(f"Bank round {40}", 40))
-    # for v in range(1, 40):
-    #     strategies.append(BankAfterRound(f"Bank round {v}", v))
+    for v in range(3, 10):
+        strategies.append(BankAfterRound(f"Bank round {v}", v))
 
-    # for v in range(200, 15000, 500):
-    #     strategies.append(ConstantBank(f"Bank at {v}", v))
+    for v in range(200, 4000, 200):
+        strategies.append(ConstantBank(f"Bank at {v}", v))
 
-    # for v in range(200, 2000, 200):
-    #     strategies.append(SmartBank(f"Scaled diff {v}", catch_up_bank=v))
+    for v in range(200, 2000, 200):
+        strategies.append(SmartBank(f"Scaled diff {v}", catch_up_bank=v))
 
-    # for v in range(200, 1000, 200):
-    #     strategies.append(
-    #         SmartBank(f"Absolute diff {v}", catch_up_bank=v, divide_mult=0)
-    #     )
+    for v in range(200, 1000, 200):
+        strategies.append(
+            SmartBank(f"Absolute diff {v}", catch_up_bank=v, divide_mult=0)
+        )
 
     strategy_names = [s.name for s in strategies]
 
@@ -238,11 +237,15 @@ def main():
     plt.xlabel("Round")
     plt.ylabel("Likelihood of Reaching Round")
     plt.title("Likelihood of Reaching Round")
-    plt.gca().yaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: f'{x:.0%}'))
-    plt.gca().yaxis.set_major_locator(plt.MultipleLocator(0.05))  # Show more percentage ticks
-    plt.gca().xaxis.set_major_locator(plt.MultipleLocator(1))  # Space vertical lines every 1
-    plt.grid(axis='y', linestyle='--', alpha=0.7)
-    plt.grid(axis='x', linestyle='--', alpha=0.7)  # Add vertical dotted lines
+    plt.gca().yaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: f"{x:.0%}"))
+    plt.gca().yaxis.set_major_locator(
+        plt.MultipleLocator(0.05)
+    )  # Show more percentage ticks
+    plt.gca().xaxis.set_major_locator(
+        plt.MultipleLocator(1)
+    )  # Space vertical lines every 1
+    plt.grid(axis="y", linestyle="--", alpha=0.7)
+    plt.grid(axis="x", linestyle="--", alpha=0.7)  # Add vertical dotted lines
     plt.tight_layout()
     plt.savefig("results-round-reach.png", bbox_inches="tight", dpi=300)
 
